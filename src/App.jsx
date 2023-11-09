@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserPage from "./pages/UserPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
+import FavoritePage from "./pages/FavoritePage";
+import CartPage from "./pages/CartPage";
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/user" element={<UserPage />} />
+          <Route path="/favorite" element={<FavoritePage />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

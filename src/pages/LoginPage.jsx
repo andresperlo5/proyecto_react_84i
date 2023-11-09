@@ -39,20 +39,31 @@ const LoginPage = () => {
       if (userExist.length > 0) {
         if (userExist[0].contrasenia === formValues.pass) {
           if (userExist[0].role === "admin") {
+            const ruta = localStorage.getItem("ruta") || "";
+
             usersLS[userPosition].login = true;
             localStorage.setItem("users", JSON.stringify(usersLS));
             localStorage.setItem("user", JSON.stringify(userExist[0]));
 
             setTimeout(() => {
-              location.href = "/admin";
+              if (ruta) {
+                location.href = `${ruta}`;
+              } else {
+                location.href = "/admin";
+              }
             }, 1000);
           } else {
+            const ruta = localStorage.getItem("ruta") || "";
             usersLS[userPosition].login = true;
             localStorage.setItem("users", JSON.stringify(usersLS));
             localStorage.setItem("user", JSON.stringify(userExist[0]));
 
             setTimeout(() => {
-              location.href = "/user";
+              if (ruta) {
+                location.href = `${ruta}`;
+              } else {
+                location.href = "/user";
+              }
             }, 1000);
           }
         } else {
@@ -61,9 +72,6 @@ const LoginPage = () => {
       } else {
         alert("El usuario no existe");
       }
-    }
-
-    if (formValues.pass === formValues.rpass) {
     }
   };
 

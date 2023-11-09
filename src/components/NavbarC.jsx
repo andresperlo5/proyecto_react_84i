@@ -11,6 +11,7 @@ const NavbarC = () => {
     const userPosition = users.findIndex((usuario) => usuario.id === userLS.id);
     users[userPosition].login = false;
     localStorage.removeItem("user");
+    localStorage.removeItem("ruta");
     localStorage.setItem("users", JSON.stringify(users));
     setTimeout(() => {
       location.href = "/";
@@ -27,6 +28,12 @@ const NavbarC = () => {
             <Nav.Link href="/">Inicio</Nav.Link>
             <Nav.Link href="#link">Sobre Nosotros</Nav.Link>
             <Nav.Link href="#contact">Contacto</Nav.Link>
+            {userLS?.login && (
+              <>
+                <Nav.Link href="/favorite">Favoritos</Nav.Link>
+                <Nav.Link href="/cart">Carrito</Nav.Link>
+              </>
+            )}
           </Nav>
           {userLS?.login ? (
             <Nav className="ms-auto">

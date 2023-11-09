@@ -9,8 +9,22 @@ const ProductPage = () => {
     (product) => product.id === Number(id)
   );
 
+  const ruta = localStorage.getItem("ruta") || "";
+
+  if (ruta) {
+    localStorage.removeItem("ruta");
+  }
+
   const agregarProducto = (id) => {
     const cartLs = JSON.parse(localStorage.getItem("cart")) || [];
+    const userLocalStorage = JSON.parse(localStorage.getItem("user"));
+
+    if (!userLocalStorage) {
+      location.href = "/login";
+      localStorage.setItem("ruta", `/product/${id}`);
+      return;
+    }
+
     if (cartLs.length > 0) {
       const prodExistCart = cartLs.filter(
         (product) => product.id === Number(id)
@@ -18,13 +32,44 @@ const ProductPage = () => {
       if (prodExistCart.length === 0) {
         cartLs.push(prodFilter[0]);
         localStorage.setItem("cart", JSON.stringify(cartLs));
+        alert("El producto se cargo correctamente al Carrito");
         return;
       } else {
         alert("El producto ya existe en el carrito");
       }
     } else {
       cartLs.push(prodFilter[0]);
+      alert("El producto se cargo correctamente al Carrito");
       localStorage.setItem("cart", JSON.stringify(cartLs));
+    }
+  };
+
+  const agregarFavorito = (id) => {
+    const favLS = JSON.parse(localStorage.getItem("favorite")) || [];
+    const userLocalStorage = JSON.parse(localStorage.getItem("user"));
+
+    if (!userLocalStorage) {
+      location.href = "/login";
+      localStorage.setItem("ruta", `/product/${id}`);
+      return;
+    }
+
+    if (favLS.length > 0) {
+      const prodExistCart = favLS.filter(
+        (product) => product.id === Number(id)
+      );
+      if (prodExistCart.length === 0) {
+        favLS.push(prodFilter[0]);
+        alert("El producto se cargo correctamente a Favoritos");
+        localStorage.setItem("favorite", JSON.stringify(favLS));
+        return;
+      } else {
+        alert("El producto ya existe en Favoritos");
+      }
+    } else {
+      favLS.push(prodFilter[0]);
+      alert("El producto se cargo correctamente a Favoritos");
+      localStorage.setItem("favorite", JSON.stringify(favLS));
     }
   };
 
@@ -48,7 +93,12 @@ const ProductPage = () => {
               >
                 Añadir al Carrito
               </button>
-              <button className="btn btn-danger">Añadir a Favorito</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => agregarFavorito(product.id)}
+              >
+                Añadir a Favorito
+              </button>
             </div>
           </div>
         </div>
